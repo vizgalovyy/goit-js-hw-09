@@ -1,6 +1,6 @@
 const form = document.querySelector('.feedback-form');
-const input = document.querySelector('.feedback-input');
-const comment = document.querySelector('.feedback-message');
+const input = document.querySelector('[name="email"]');
+const comment = document.querySelector('[name="message"]');
 
 const formState = {
   email: '',
@@ -10,7 +10,9 @@ const formState = {
 const savedState = localStorage.getItem('feedback-form-state');
 if (savedState) {
   const state = JSON.parse(savedState);
+  input.value = state.email;
   formState.email = state.email;
+  comment.value = state.message;
   formState.message = state.message;
 }
 
@@ -27,6 +29,8 @@ form.addEventListener('submit', event => {
   } else {
     console.log(formState);
     localStorage.removeItem('feedback-form-state');
-    form.reset;
+    formState.email = '';
+    formState.message = '';
+    form.reset();
   }
 });
